@@ -48,7 +48,11 @@ public class Correntista {
         return contas;
     }
 
-    public void setContas(Conta conta) {
+    public void adicionar(Conta conta) {
         this.contas.add(conta);
     }
+    public void remover(Conta conta){
+        this.contas.remove(conta);
+    }
+
 }

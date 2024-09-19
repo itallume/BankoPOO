@@ -6,6 +6,12 @@ public class Conta {
     private double saldo;
     private ArrayList<Correntista> correntistas = new ArrayList<>();
 
+    public Conta(int id, String data, double saldo) {
+        this.id = id;
+        this.data = data;
+        this.saldo = saldo;
+    }
+
     public void creditar(double valor){
 
     }
@@ -41,7 +47,10 @@ public class Conta {
         return correntistas;
     }
 
-    public void setCorrentistas(Correntista correntista) {
+    public void adicionar(Correntista correntista) {
         this.correntistas.add(correntista);
+    }
+    public void remover(Correntista correntista){
+        this.correntistas.remove(correntista);
     }
 }
