@@ -164,30 +164,29 @@ public class Repositorio {
 				arquivo1.close();
 			}
 		}
-			catch(Exception e){
-				throw new RuntimeException("problema na escrita no arquivo eventos "+e.getMessage());
-			}
-
-			try	{
-				File f = new File( new File(".\\correntistas.csv").getCanonicalPath())  ;
-				FileWriter arquivo2 = new FileWriter(f) ;
-				ArrayList<String> lista ;
-				String listaId;
-				for(Correntista correntista : correntistas) {
-					lista = new ArrayList<>();
-					for (Conta c : correntista.getContas()) {
-						lista.add(c.getId() + "");
-					}
-					listaId = String.join(",", lista);
-
-					arquivo2.write(correntista.getCpf() + ";" + correntista.getNome() + ";" + correntista.getSenha() + ";" + listaId + "\n");
-				}
-				arquivo2.close();
-			}
-			catch (Exception e) {
-				throw new RuntimeException("problema na cria��o do arquivo  participantes "+e.getMessage());
-			}
-
+		catch(Exception e){
+			throw new RuntimeException("problema na escrita no arquivo eventos: "+e.getMessage());
 		}
+
+		try	{
+			File f = new File( new File(".\\correntistas.csv").getCanonicalPath())  ;
+			FileWriter arquivo2 = new FileWriter(f) ;
+			ArrayList<String> lista ;
+			String listaId;
+			for(Correntista correntista : correntistas) {
+				lista = new ArrayList<>();
+				for (Conta c : correntista.getContas()) {
+					lista.add(c.getId() + "");
+				}
+				listaId = String.join(",", lista);
+				arquivo2.write(correntista.getCpf() + ";" + correntista.getNome() + ";" + correntista.getSenha() + ";" + listaId + "\n");
+			}
+			arquivo2.close();
+		}
+		catch (Exception e) {
+			throw new RuntimeException("problema na escrita do arquivo correntistas: "+e.getMessage());
+		}
+
+	}
 
 }

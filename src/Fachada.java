@@ -1,9 +1,26 @@
 import java.util.ArrayList;
 
 public class Fachada {
+    private static Repositorio repositorio = new Repositorio();
     public static ArrayList<Correntista> listarCorrentistas(){
-        return null;
+        ArrayList<Correntista> correntistas = repositorio.getCorrentistas();
+        ArrayList<Correntista> correntistasOrdenados = new ArrayList<>();
+
+        for (Correntista crnt : correntistas){
+            if (correntistasOrdenados.isEmpty()){
+                correntistasOrdenados.add(crnt);
+                continue;
+            }
+            for(int i = 0; i < correntistasOrdenados.size(); i++){
+                if (crnt.getCpf().compareTo(correntistasOrdenados.get(i).getCpf()) > 0){
+                    correntistasOrdenados.add(i, crnt);
+                    break;
+                }
+            }
+        }
+        return correntistasOrdenados;
     }
+
 
     public static ArrayList<Conta> listarContas(){
         return null;
