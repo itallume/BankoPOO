@@ -1,8 +1,9 @@
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Conta {
     protected int id;
-    protected String data;
+    protected String data ;
     protected double saldo;
     private ArrayList<Correntista> correntistas = new ArrayList<>();
 
@@ -10,6 +11,11 @@ public class Conta {
         this.id = id;
         this.data = data;
         this.saldo = saldo;
+    }
+
+    public Conta(int id, String data) {
+        this.id = id;
+        this.data = data;
     }
 
     public void creditar(double valor) throws Exception {

@@ -2,6 +2,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -78,6 +80,12 @@ public class Repositorio {
 			Conta ultimo = contas.getLast();
 			return ultimo.getId() + 1;
 		}
+	}
+
+	public String gerarData(){
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		LocalDate data = LocalDate.now();
+		return sdf.format(data);
 	}
 
 	public void carregarDados(){
