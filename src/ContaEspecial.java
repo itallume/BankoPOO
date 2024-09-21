@@ -7,8 +7,11 @@ public class ContaEspecial extends Conta{
     }
 
     @Override
-    public void debitar(double valor) {
-        super.debitar(valor);
+    public void debitar(double valor) throws Exception {
+        if (getSaldo() + limite - valor < 0){
+            throw new Exception("Saldo insuficiente");
+        }
+        this.saldo -= valor;
     }
 
     public double getLimite() {

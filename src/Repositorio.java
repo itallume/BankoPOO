@@ -3,6 +3,7 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Repositorio {
@@ -14,7 +15,12 @@ public class Repositorio {
     }
 
     public void adicionar(Correntista c) {
-        correntistas.add(c);
+		for(int i = 0; i < correntistas.size(); i++){
+			if (c.getCpf().compareTo(correntistas.get(i).getCpf()) > 0){
+				correntistas.add(i, c);
+				break;
+			}
+		}
     }
     
 	public void remover(Correntista c){
@@ -139,9 +145,7 @@ public class Repositorio {
 					Conta c = this.localizar(Integer.parseInt(id));
 					c.adicionar(correntista);
 					correntista.adicionar(c);
-
 				}
-
 			}
 			arquivo2.close();
 		} catch(Exception ex)		{

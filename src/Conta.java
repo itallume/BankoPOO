@@ -1,9 +1,9 @@
 import java.util.ArrayList;
 
 public class Conta {
-    private int id;
-    private String data;
-    private double saldo;
+    protected int id;
+    protected String data;
+    protected double saldo;
     private ArrayList<Correntista> correntistas = new ArrayList<>();
 
     public Conta(int id, String data, double saldo) {
@@ -12,11 +12,22 @@ public class Conta {
         this.saldo = saldo;
     }
 
-    public void creditar(double valor){
-
+    public void creditar(double valor) throws Exception {
+        if (valor <= 0){
+            throw new Exception("Valor não pode ser negativou ou zero");
+        }
+        saldo += valor;
     }
-    public void debitar(double valor){
+    public void debitar(double valor) throws Exception {
+        if (valor > saldo){
+            throw new Exception("Saldo insuficiente");
+        }
+        saldo -= valor;
+    }
 
+    public void transferir (double valor, Conta destino) throws Exception {
+        debitar(valor);
+        destino.creditar(valor);
     }
 
     public int getId() {

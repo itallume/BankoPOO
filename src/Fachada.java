@@ -3,31 +3,21 @@ import java.util.ArrayList;
 public class Fachada {
     private static Repositorio repositorio = new Repositorio();
     public static ArrayList<Correntista> listarCorrentistas(){
-        ArrayList<Correntista> correntistas = repositorio.getCorrentistas();
-        ArrayList<Correntista> correntistasOrdenados = new ArrayList<>();
-
-        for (Correntista crnt : correntistas){
-            if (correntistasOrdenados.isEmpty()){
-                correntistasOrdenados.add(crnt);
-                continue;
-            }
-            for(int i = 0; i < correntistasOrdenados.size(); i++){
-                if (crnt.getCpf().compareTo(correntistasOrdenados.get(i).getCpf()) > 0){
-                    correntistasOrdenados.add(i, crnt);
-                    break;
-                }
-            }
-        }
-        return correntistasOrdenados;
+        return repositorio.getCorrentistas();
     }
-
 
     public static ArrayList<Conta> listarContas(){
-        return null;
+
+        return repositorio.getContas();
     }
 
-    public static void criarCorrentista(String cpf, String nome,String senha){
-        
+    public static void criarCorrentista(String cpf, String nome,String senha) throws Exception {
+        if (!senha.matches("^\\d{4}$")){
+            throw new Exception("Senha deve ter apenas 4 caracteres numéricos.");
+        }
+        Correntista correntista = new Correntista(cpf, nome, senha);
+        repositorio.adicionar(correntista);
+        repositorio.salvarObjetos();
     }
 
     public static void criarConta(String cpf){
