@@ -42,7 +42,7 @@ public class TelaCorrentista {
 	private JLabel label_8;
 	private JLabel label_Senha;
 	private JButton button_VerContas;
-	private JFormattedTextField textField_CPF;
+	private JTextField textField_CPF;
 
 	/**
 	 * Launch the application.
@@ -151,16 +151,16 @@ public class TelaCorrentista {
 		label_Nome.setBounds(26, 205, 50, 14);
 		frame.getContentPane().add(label_Nome);
 
-		try {
-			 textField_CPF = new JFormattedTextField(new MaskFormatter("###.###.###-##"));
-		} 
-		catch (ParseException e1) {}
-		
+//		try {
+//			 textField_CPF = new JFormattedTextField(new MaskFormatter("###.###.###-##"));
+//		} 
+//		catch (ParseException e1) {}
+		textField_CPF = new JTextField();
 		textField_CPF.setFont(new Font("Dialog", Font.PLAIN, 12));
 		textField_CPF.setColumns(10);
 		textField_CPF.setBounds(72, 230, 104, 20);
 		frame.getContentPane().add(textField_CPF);
-
+		
 		textField_Nome = new JTextField();
 		textField_Nome.setFont(new Font("Dialog", Font.PLAIN, 12));
 		textField_Nome.setColumns(10);

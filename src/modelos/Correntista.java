@@ -62,9 +62,17 @@ public class Correntista {
 
     @Override
     public String toString() {
-        return "Correntista{" +
+    	String msg = "Correntista{" +
                 "cpf='" + cpf + '\'' +
                 ", nome='" + nome + '\'' +
-                ", senha='" + senha +'}';
+                ", contas=[id=";
+    	
+    	for (Conta c : contas) {
+    		msg += c.getId() + ",";
+    		}
+    	
+    	msg += "]}";
+    	
+        return msg;
     }
 }

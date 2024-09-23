@@ -18,9 +18,16 @@ public class Fachada {
     }
 
     public static void criarCorrentista(String cpf, String nome,String senha) throws Exception {
-        if (!senha.matches("^\\d{4}$")){
+        for (Correntista c : repositorio.getCorrentistas()) {
+        	if (c.getCpf().equals(cpf)) {
+        		throw new Exception("Cpf já cadastrado!");
+        	}
+        }
+        
+    	if (!senha.matches("^\\d{4}$")){
             throw new Exception("Senha deve ter apenas 4 caracteres numéricos.");
         }
+        
         Correntista correntista = new Correntista(cpf, nome, senha);
         repositorio.adicionar(correntista);
         repositorio.salvarObjetos();
@@ -66,6 +73,10 @@ public class Fachada {
     public static void inserirCorrentistaConta (int id, String cpf) throws Exception {
         Conta conta = procurarConta(id);
         Correntista correntista = procurarCorrentista(cpf);
+        
+        if (conta.getCorrentistas().contains(correntista)) {
+        	throw new Exception("Correntista já está vinculado a esta conta!");
+        }
 
         conta.adicionar(correntista);
         correntista.adicionar(conta);

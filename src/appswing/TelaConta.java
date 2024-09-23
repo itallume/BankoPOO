@@ -193,7 +193,9 @@ public class TelaConta{
 				try{
 					if (table.getSelectedRow() >= 0){
 						//String cpf = (String) table.getValueAt( table.getSelectedRow(), 1);
-						int id = (int) table.getValueAt(table.getSelectedRow(), 1);
+						//int id = (int) table.getValueAt(table.getSelectedRow(), 1);
+						int id = (int) table.getValueAt(table.getSelectedRow(), 0);
+
 						Fachada.apagarConta(id);
 						label.setText("deletou conta " +id);
 						listagem();
@@ -215,13 +217,8 @@ public class TelaConta{
 			public void actionPerformed(ActionEvent e) {
 				try{
 					if (table.getSelectedRow() >= 0){
-						int id = (int) table.getValueAt(table.getSelectedRow(), 1);
+						int id = (int) table.getValueAt(table.getSelectedRow(), 0);
 						String cpf = JOptionPane.showInputDialog(frame, "Digite o cpf do cotitular");
-						//Participante p = Fachada.localizarParticipante(nome);
-						//Evento ev = Fachada.localizarEvento(Integer.parseInt(id));
-						//double valor = p.getPago(ev.getPreco());
-
-						//JOptionPane.showMessageDialog(frame, "Preco do evento="+ev.getPreco()+ " - Valor a ser pago =" +valor);
 
 						Object[] options = { "Confirmar", "Desistir" };
 						int escolha = JOptionPane.showOptionDialog(null, "Confirma inserção de cotitular "+id, "Alerta",
@@ -255,14 +252,8 @@ public class TelaConta{
 			public void actionPerformed(ActionEvent e) {
 				try{
 					if (table.getSelectedRow() >= 0){
-						//String nome = (String) table.getValueAt( table.getSelectedRow(), 1);
-						int id = (int) table.getValueAt(table.getSelectedRow(), 1);
+						int id = (int) table.getValueAt(table.getSelectedRow(), 0);
 						String cpf = JOptionPane.showInputDialog(frame, "Digite o cpf do cotitular");
-//						Participante p = Fachada.localizarParticipante(nome);
-//						Evento ev = Fachada.localizarEvento(Integer.parseInt(id));
-//						double valor = p.getPago(ev.getPreco());
-
-						//JOptionPane.showMessageDialog(frame, "Preco do evento="+ev.getPreco()+ " - Valor que foi pago =" +valor);
 
 						Object[] options = { "Confirmar", "Desistir" };
 						int escolha = JOptionPane.showOptionDialog(null, "Confirma remocao do cotitular "+cpf, "Alerta",

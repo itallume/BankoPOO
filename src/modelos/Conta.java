@@ -82,6 +82,7 @@ public class Conta {
         return "Conta{" +
                 "id=" + id +
                 ", data='" + data + '\'' +
-                ", saldo=" + saldo +'}';
+                ", saldo=" + saldo + 
+                ", correntistas=" + getCorrentistas().toString()+'}';
     }
 }
