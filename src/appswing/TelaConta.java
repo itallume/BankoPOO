@@ -116,6 +116,7 @@ public class TelaConta{
 				new ActionListener() 
 				{
 					public void actionPerformed(ActionEvent e) {
+						label.setText(null);
 						textField_PesquisarId.setText("");
 						textField_PesquisarId.requestFocus();
 						listagem(Fachada.listarContas());
@@ -142,6 +143,7 @@ public class TelaConta{
 		button_Criar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
+					label.setText(null);
 					if(textField_Cpf.getText().isEmpty()) {
 						label.setText("campo vazio");
 						return;
@@ -173,17 +175,35 @@ public class TelaConta{
 		button_Listar = new JButton("Listar");
 		button_Listar.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		button_Listar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				List<Conta> contaPesquisada = new ArrayList<>();
-				for (Conta c: Fachada.listarContas()) {
-					if (c.getId() == Integer.parseInt(textField_PesquisarId.getText())) {
-						contaPesquisada.add(c);
-						break;
+		    public void actionPerformed(ActionEvent e) {
+		    	
+		        try {
+					label.setText(null);
+					if (textField_PesquisarId.getText().isEmpty()) {
+						listagem(Fachada.listarContas());
+		                throw new Exception("Pesquisa vazia, digite um ID!");
 					}
-				}
-				listagem(contaPesquisada);
-			}
+		            if (!textField_PesquisarId.getText().matches("^\\d+$")) {
+						listagem(Fachada.listarContas());
+		                throw new Exception("Pesquisa por ID, digite caracteres numéricos!");
+		            }
+		           
+
+		            List<Conta> contaPesquisada = new ArrayList<>();
+		            for (Conta c : Fachada.listarContas()) {
+		                if (c.getId() == Integer.parseInt(textField_PesquisarId.getText())) {
+		                    contaPesquisada.add(c);
+		                    break;
+		                }
+		            }
+		            listagem(contaPesquisada);
+		        } catch (Exception ex) {
+		            label.setText(ex.getMessage());
+		            
+		        }
+		    }
 		});
+
 		button_Listar.setBounds(306, 9, 89, 23);
 		frame.getContentPane().add(button_Listar);
 
@@ -203,6 +223,7 @@ public class TelaConta{
 		button_Apagar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try{
+					label.setText(null);
 					if (table.getSelectedRow() >= 0){
 						//String cpf = (String) table.getValueAt( table.getSelectedRow(), 1);
 						//int id = (int) table.getValueAt(table.getSelectedRow(), 1);
@@ -228,6 +249,8 @@ public class TelaConta{
 		button_AddCotitular.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try{
+					label.setText(null);
+
 					if (table.getSelectedRow() >= 0){
 						int id = (int) table.getValueAt(table.getSelectedRow(), 0);
 						String cpf = JOptionPane.showInputDialog(frame, "Digite o cpf do cotitular");
@@ -263,6 +286,7 @@ public class TelaConta{
 		button_RmvCotitular.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try{
+					label.setText(null);
 					if (table.getSelectedRow() >= 0){
 						int id = (int) table.getValueAt(table.getSelectedRow(), 0);
 						String cpf = JOptionPane.showInputDialog(frame, "Digite o cpf do cotitular");
@@ -300,6 +324,8 @@ public class TelaConta{
 		try{
 			//List<Conta> lista = Fachada.listarContas(textField_PesquisarNome.getText());
 			//List<Conta> lista = Fachada.listarContas();
+			
+		
 
 			DefaultTableModel model = new DefaultTableModel();
 
@@ -308,22 +334,26 @@ public class TelaConta{
 			model.addColumn("data");
 			model.addColumn("saldo");
 			model.addColumn("limite");
-			model.addColumn("Correntistas");
+			model.addColumn("Titular");
+			model.addColumn("Cotitulares");
 
-			//linhas
+			
 			String texto;
 			for(Conta c : lista) {
-				texto=" ";
-				for(Correntista cr : c.getCorrentistas()) 
-					texto += cr.getNome()+ " " ;
+				String titular = c.getCorrentistas().getFirst().getNome();
 				
-
+				texto=" ";
+				for(Correntista cr : c.getCorrentistas().subList(1, c.getCorrentistas().size())) 
+					texto += cr.getNome()+ " " ;
+		
+				
+				//linhas
 				if(c instanceof ContaEspecial ce)
 					//model.addRow(new Object[]{p.getEmail(), p.getNome(), p.getIdade(), ce.getEmpresa(),p.getPercentual(), texto});
-					model.addRow(new Object[]{c.getId(),c.getData(),c.getSaldo(),ce.getLimite(), texto});
+					model.addRow(new Object[]{c.getId(),c.getData(),c.getSaldo(),ce.getLimite(),titular, texto});
 				else
 					//model.addRow(new Object[]{p.getEmail(), p.getNome(), p.getIdade(), "",p.getPercentual(), texto});
-					model.addRow(new Object[]{c.getId(),c.getData(),c.getSaldo(), "",texto});
+					model.addRow(new Object[]{c.getId(),c.getData(),c.getSaldo(), "",titular,texto});
 
 			}
 
