@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -34,7 +35,7 @@ public class TelaConta{
 	private JLabel label_6;
 	private JLabel label_1;
 	private JLabel label_Id;
-	private JTextField textField_PesquisarNome;
+	private JTextField textField_PesquisarId;
 	private JTextField textField_Cpf;
 	private JButton button_Listar;
 	private JButton button_Criar;
@@ -66,7 +67,7 @@ public class TelaConta{
 		frame.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowOpened(WindowEvent e) {
-				listagem();
+				listagem(Fachada.listarContas());
 			}
 		});
 
@@ -103,20 +104,21 @@ public class TelaConta{
 		label_1.setBounds(21, 14, 128, 14);
 		frame.getContentPane().add(label_1);
 
-		textField_PesquisarNome = new JTextField();
-		textField_PesquisarNome.setFont(new Font("Dialog", Font.PLAIN, 12));
-		textField_PesquisarNome.setColumns(10);
-		textField_PesquisarNome.setBackground(Color.WHITE);
-		textField_PesquisarNome.setBounds(159, 11, 137, 20);
-		frame.getContentPane().add(textField_PesquisarNome);
+		textField_PesquisarId = new JTextField();
+		textField_PesquisarId.setFont(new Font("Dialog", Font.PLAIN, 12));
+		textField_PesquisarId.setColumns(10);
+		textField_PesquisarId.setBackground(Color.WHITE);
+		textField_PesquisarId.setBounds(159, 11, 137, 20);
+		frame.getContentPane().add(textField_PesquisarId);
 		
 		button_Limpar = new JButton("Limpar");
 		button_Limpar.addActionListener(
 				new ActionListener() 
 				{
 					public void actionPerformed(ActionEvent e) {
-						textField_PesquisarNome.setText("");
-						textField_PesquisarNome.requestFocus();
+						textField_PesquisarId.setText("");
+						textField_PesquisarId.requestFocus();
+						listagem(Fachada.listarContas());
 					}
 				}
 				);
@@ -146,7 +148,10 @@ public class TelaConta{
 					}
 					String cpf = textField_Cpf.getText();
 					String limite = textField_Limite.getText();
-
+					
+					if (!(limite.matches("^\\d+$") && cpf.matches("^\\d+$")))  {
+						throw new Exception("Os campos acima devem ser numéricos!");
+					}
 					
 					if(limite.isEmpty())
 						Fachada.criarConta(cpf);
@@ -154,7 +159,7 @@ public class TelaConta{
 						Fachada.criarContaEspecial(cpf,Double.parseDouble(limite));
 
 					label.setText("Conta criada!");
-					listagem();
+					listagem(Fachada.listarContas());
 				}
 				catch(Exception ex) {
 					label.setText(ex.getMessage());
@@ -169,7 +174,14 @@ public class TelaConta{
 		button_Listar.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		button_Listar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				listagem();
+				List<Conta> contaPesquisada = new ArrayList<>();
+				for (Conta c: Fachada.listarContas()) {
+					if (c.getId() == Integer.parseInt(textField_PesquisarId.getText())) {
+						contaPesquisada.add(c);
+						break;
+					}
+				}
+				listagem(contaPesquisada);
 			}
 		});
 		button_Listar.setBounds(306, 9, 89, 23);
@@ -198,7 +210,7 @@ public class TelaConta{
 
 						Fachada.apagarConta(id);
 						label.setText("deletou conta " +id);
-						listagem();
+						listagem(Fachada.listarContas());
 					}
 					else
 						label.setText("conta nao selecionada");
@@ -226,7 +238,7 @@ public class TelaConta{
 						if(escolha == 0) {
 							Fachada.inserirCorrentistaConta(id, cpf);
 							label.setText("Correntista "+cpf+" adicionado em "+id );
-							listagem();
+							listagem(Fachada.listarContas());
 						}
 						else
 							label.setText("nao adicionou cotitular " +cpf );
@@ -262,7 +274,7 @@ public class TelaConta{
 							//Fachada.removerParticipanteEvento(nome, Integer.parseInt(id));
 							Fachada.removerCorrentistaConta(id, cpf);
 							label.setText("vc removeu "+cpf+ "da conta "+id);
-							listagem();
+							listagem(Fachada.listarContas());
 						}
 						else
 							label.setText("nao removeu cotitular " +cpf );
@@ -284,10 +296,10 @@ public class TelaConta{
 		frame.getContentPane().add(button_RmvCotitular);
 	}
 
-	public void listagem() {
+	public void listagem(List<Conta> lista) {
 		try{
 			//List<Conta> lista = Fachada.listarContas(textField_PesquisarNome.getText());
-			List<Conta> lista = Fachada.listarContas();
+			//List<Conta> lista = Fachada.listarContas();
 
 			DefaultTableModel model = new DefaultTableModel();
 

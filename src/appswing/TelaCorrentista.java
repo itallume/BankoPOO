@@ -35,7 +35,7 @@ public class TelaCorrentista {
 	private JButton button;
 	private JButton button_Listar;
 	private JTextField textField_Nome;
-	private JTextField textField_Senha;
+	private JFormattedTextField textField_Senha;
 	private JLabel label;
 	private JLabel label_cpf;
 	private JLabel label_Nome;
@@ -116,10 +116,15 @@ public class TelaCorrentista {
 						label.setText("campo vazio");
 						return;
 					}
-
+					
 					String cpf = textField_CPF.getText();
 					String nome = textField_Nome.getText();
 					String senha = textField_Senha.getText();
+					
+					if (!(cpf.matches("^\\d+$") && senha.matches("^\\d+$")))  {
+						throw new Exception("Os campos acima devem ser numéricos!");
+					}
+					
 					Fachada.criarCorrentista(cpf, nome, senha);
 					label.setText("Correntista Criado!");
 					listagem();
@@ -170,14 +175,20 @@ public class TelaCorrentista {
 		label_8 = new JLabel("selecione");
 		label_8.setBounds(26, 163, 561, 14);
 		frame.getContentPane().add(label_8);
-
+		
+		
 		label_Senha = new JLabel("Senha:");
 		label_Senha.setHorizontalAlignment(SwingConstants.LEFT);
 		label_Senha.setFont(new Font("Dialog", Font.PLAIN, 12));
 		label_Senha.setBounds(26, 258, 43, 14);
 		frame.getContentPane().add(label_Senha);
 
-		textField_Senha = new JTextField();
+		try {
+		 textField_Senha= new JFormattedTextField(new MaskFormatter("####"));
+		} 
+		catch (ParseException e1) {}
+		
+		//textField_Senha = new JFormattedTextField();
 		textField_Senha.setFont(new Font("Dialog", Font.PLAIN, 12));
 		textField_Senha.setColumns(10);
 		textField_Senha.setBounds(72, 255, 43, 20);
@@ -205,7 +216,7 @@ public class TelaCorrentista {
 						for(Conta c : Fachada.listarContas()) {
 							for (Correntista cr : c.getCorrentistas()) {
 								if (cr.getCpf().equals(cpf)) {
-									id+="\n"+c.getId();
+									id+="\n"+c.getId()+" "+c.getCorrentistas().getFirst().getNome()+"(titular)";
 								}
 							}
 							

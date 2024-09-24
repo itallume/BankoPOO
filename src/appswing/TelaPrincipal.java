@@ -81,6 +81,13 @@ public class TelaPrincipal {
 		});
 		
 		mnCaixa =new JMenu("Caixa");
+		mnCaixa.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				TelaCaixa tela = new TelaCaixa();
+			}
+		});
+		
 		
 		menuBar.add(mnConta);
 		menuBar.add(mnCorrentista);

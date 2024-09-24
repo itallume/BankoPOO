@@ -151,7 +151,7 @@ public class Fachada {
         repositorio.salvarObjetos();
     }
 
-    private static Conta procurarConta(int id) throws Exception {
+    public static Conta procurarConta(int id) throws Exception {
         Conta conta = repositorio.localizar(id);
         if (conta == null){
             throw new Exception("Conta não encontrada, verifique o id: "+ id);
@@ -159,7 +159,7 @@ public class Fachada {
         return conta;
     }
 
-    private static Correntista procurarCorrentista(String cpf) throws Exception {
+    public static Correntista procurarCorrentista(String cpf) throws Exception {
         Correntista correntista = repositorio.localizar(cpf);
         if (correntista == null){
             throw new Exception("Correntista não encontrado, verifique o cpf: "+cpf);
