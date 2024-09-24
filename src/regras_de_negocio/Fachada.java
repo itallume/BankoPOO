@@ -87,6 +87,10 @@ public class Fachada {
         Conta conta = procurarConta(id);
         Correntista correntista = procurarCorrentista(cpf);
 
+        if (!conta.getCorrentistas().contains(correntista)){
+            throw new Exception("Correntista não faz parte desta conta!");
+        }
+
         if (conta.getCorrentistas().getFirst().getCpf().equals(cpf)){
             throw new Exception("Correntista titular não pode ser removido");
         }
@@ -117,6 +121,9 @@ public class Fachada {
         Conta conta = procurarConta(id);
         Correntista correntista = procurarCorrentista(cpf);
 
+        if (!conta.getCorrentistas().contains(correntista)) {
+            throw new Exception("Só é possível creditar um valor se você for um correntista da conta");
+        }
         if (!correntista.getSenha().equals(senha)){
             throw new Exception("Senha incorreta");
         }
@@ -130,7 +137,7 @@ public class Fachada {
         Correntista correntista = procurarCorrentista(cpf);
         
         if (!conta.getCorrentistas().contains(correntista)) {
-        	throw new Exception("Só é possivel debitar um valor se você for um correntista da conta");
+        	throw new Exception("Só é possível debitar um valor se você for um correntista da conta");
         }
         if (!correntista.getSenha().equals(senha)){
             throw new Exception("Senha incorreta");
@@ -146,7 +153,7 @@ public class Fachada {
         Correntista correntista = procurarCorrentista(cpf);
         
         if (!c1.getCorrentistas().contains(correntista)) {
-        	throw new Exception("Só é possivel tranferir um valor se você for um correntista da conta de origem");
+        	throw new Exception("Só é possível transferir um valor se você for um correntista da conta de origem");
         }
         if (!correntista.getSenha().equals(senha)){
             throw new Exception("Senha incorreta");
