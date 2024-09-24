@@ -128,7 +128,10 @@ public class Fachada {
     public static void debitarValor(int id, String cpf, String senha,double valor) throws Exception {
         Conta conta = procurarConta(id);
         Correntista correntista = procurarCorrentista(cpf);
-
+        
+        if (!conta.getCorrentistas().contains(correntista)) {
+        	throw new Exception("Só é possivel debitar um valor se você for um correntista da conta");
+        }
         if (!correntista.getSenha().equals(senha)){
             throw new Exception("Senha incorreta");
         }
@@ -141,7 +144,10 @@ public class Fachada {
         Conta c1 = procurarConta(id1);
         Conta c2 = procurarConta(id2);
         Correntista correntista = procurarCorrentista(cpf);
-
+        
+        if (!c1.getCorrentistas().contains(correntista)) {
+        	throw new Exception("Só é possivel tranferir um valor se você for um correntista da conta de origem");
+        }
         if (!correntista.getSenha().equals(senha)){
             throw new Exception("Senha incorreta");
         }
