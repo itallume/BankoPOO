@@ -94,11 +94,11 @@ public class TelaConta{
 		label.setBounds(21, 321, 688, 14);
 		frame.getContentPane().add(label);
 
-		label_6 = new JLabel("selecione");
+		label_6 = new JLabel("Selecione");
 		label_6.setBounds(21, 190, 431, 14);
 		frame.getContentPane().add(label_6);
 
-		label_1 = new JLabel("Digite parte do nome");
+		label_1 = new JLabel("Digite o ID:");
 		label_1.setHorizontalAlignment(SwingConstants.LEFT);
 		label_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		label_1.setBounds(21, 14, 128, 14);
@@ -108,7 +108,7 @@ public class TelaConta{
 		textField_PesquisarId.setFont(new Font("Dialog", Font.PLAIN, 12));
 		textField_PesquisarId.setColumns(10);
 		textField_PesquisarId.setBackground(Color.WHITE);
-		textField_PesquisarId.setBounds(159, 11, 137, 20);
+		textField_PesquisarId.setBounds(99, 10, 137, 20);
 		frame.getContentPane().add(textField_PesquisarId);
 		
 		button_Limpar = new JButton("Limpar");
@@ -124,7 +124,7 @@ public class TelaConta{
 				}
 				);
 		button_Limpar.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		button_Limpar.setBounds(402, 10, 89, 23);
+		button_Limpar.setBounds(342, 9, 89, 23);
 		frame.getContentPane().add(button_Limpar);
 
 		label_Id = new JLabel("CPF:");
@@ -145,14 +145,18 @@ public class TelaConta{
 				try {
 					label.setText(null);
 					if(textField_Cpf.getText().isEmpty()) {
-						label.setText("campo vazio");
+						label.setText("Campo vazio!");
 						return;
 					}
 					String cpf = textField_Cpf.getText();
 					String limite = textField_Limite.getText();
 					
-					if (!(limite.matches("^\\d+$") && cpf.matches("^\\d+$")))  {
-						throw new Exception("Os campos acima devem ser numéricos!");
+					if (!cpf.matches("^\\d+$")) {
+						throw new Exception("CPF deve ser numérico!");
+					}
+					
+					if (!limite.matches("^\\d+$") && !limite.isEmpty())  {
+						throw new Exception("Limite deve ser numérico!");
 					}
 					
 					if(limite.isEmpty())
@@ -204,7 +208,7 @@ public class TelaConta{
 		    }
 		});
 
-		button_Listar.setBounds(306, 9, 89, 23);
+		button_Listar.setBounds(246, 8, 89, 23);
 		frame.getContentPane().add(button_Listar);
 
 		label_Limite = new JLabel("Limite (Conta Especial):");
