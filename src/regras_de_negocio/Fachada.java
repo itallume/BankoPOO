@@ -1,6 +1,5 @@
 package regras_de_negocio;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 
 import repositorio.Repositorio;

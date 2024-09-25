@@ -238,7 +238,7 @@ public class TelaConta{
 						listagem(Fachada.listarContas());
 					}
 					else
-						label.setText("conta nao selecionada");
+						label.setText("Conta nao selecionada");
 				}
 				catch(Exception ex) {
 					label.setText(ex.getMessage());
@@ -265,18 +265,18 @@ public class TelaConta{
 								JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[1]);
 						if(escolha == 0) {
 							Fachada.inserirCorrentistaConta(id, cpf);
-							label.setText("Correntista "+cpf+" adicionado em "+id );
+							label.setText("Correntista "+cpf+" adicionado na conta: "+id );
 							listagem(Fachada.listarContas());
 						}
 						else
-							label.setText("nao adicionou cotitular " +cpf );
+							label.setText("Nao adicionou cotitular " +cpf );
 
 					}
 					else
-						label.setText("conta nao selecionada");
+						label.setText("Conta nao selecionada");
 				}
 				catch(NumberFormatException ex) {
-					label.setText("formato do id invalido");
+					label.setText("Formato do id invalido");
 				}
 				catch(Exception ex) {
 					label.setText(ex.getMessage());
@@ -302,18 +302,18 @@ public class TelaConta{
 								JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[1]);
 						if(escolha == 0) {
 							Fachada.removerCorrentistaConta(id, cpf);
-							label.setText("vc removeu "+cpf+ "da conta "+id);
+							label.setText("Voce removeu '"+cpf+ "' da conta: "+id);
 							listagem(Fachada.listarContas());
 						}
 						else
-							label.setText("nao removeu cotitular " +cpf );
+							label.setText("Voce desistiu de remover cotitular " +cpf );
 
 					}
 					else
 						label.setText("Conta nao selecionada");
 				}
 				catch(NumberFormatException ex) {
-					label.setText("formato do id invalido");
+					label.setText("Formato do id invalido");
 				}
 				catch(Exception ex) {
 					label.setText(ex.getMessage());
@@ -338,8 +338,9 @@ public class TelaConta{
 			model.addColumn("Cotitulares");
 
 			String texto;
-			ArrayList<String> correntistasAssociados = new ArrayList<>();
+			
 			for(Conta c : lista) {
+				ArrayList<String> correntistasAssociados = new ArrayList<>();
 				String titular = c.getCorrentistas().getFirst().getNome();
 				
 				for(Correntista cr : c.getCorrentistas().subList(1, c.getCorrentistas().size())) { 
