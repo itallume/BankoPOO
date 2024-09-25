@@ -26,6 +26,7 @@ import modelos.Conta;
 import modelos.ContaEspecial;
 import modelos.Correntista;
 import regras_de_negocio.Fachada;
+import java.awt.SystemColor;
 
 public class TelaConta{
 	private JDialog frame;
@@ -46,24 +47,21 @@ public class TelaConta{
 	private JButton button_RmvCotitular;
 	private JButton button_Limpar;
 
-
-
 	public TelaConta() {
 		initialize();
 		frame.setVisible(true);
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
 	private void initialize() {
 		frame = new JDialog();
+		frame.getContentPane().setBackground(SystemColor.inactiveCaption);
 		frame.setModal(true);
 		frame.setResizable(false);
 		frame.setTitle("Conta");
 		frame.setBounds(100, 100, 729, 385);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+		frame.setLocationRelativeTo(null);
 		frame.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowOpened(WindowEvent e) {
@@ -100,8 +98,8 @@ public class TelaConta{
 
 		label_1 = new JLabel("Digite o ID:");
 		label_1.setHorizontalAlignment(SwingConstants.LEFT);
-		label_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		label_1.setBounds(21, 14, 128, 14);
+		label_1.setFont(new Font("Tahoma", Font.BOLD, 12));
+		label_1.setBounds(21, 14, 78, 14);
 		frame.getContentPane().add(label_1);
 
 		textField_PesquisarId = new JTextField();
@@ -112,6 +110,7 @@ public class TelaConta{
 		frame.getContentPane().add(textField_PesquisarId);
 		
 		button_Limpar = new JButton("Limpar");
+		button_Limpar.setBackground(SystemColor.control);
 		button_Limpar.addActionListener(
 				new ActionListener() 
 				{
@@ -129,17 +128,18 @@ public class TelaConta{
 
 		label_Id = new JLabel("CPF:");
 		label_Id.setHorizontalAlignment(SwingConstants.LEFT);
-		label_Id.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		label_Id.setFont(new Font("Tahoma", Font.BOLD, 12));
 		label_Id.setBounds(21, 257, 34, 14);
 		frame.getContentPane().add(label_Id);
 
 		textField_Cpf = new JTextField();
 		textField_Cpf.setFont(new Font("Dialog", Font.PLAIN, 12));
 		textField_Cpf.setColumns(10);
-		textField_Cpf.setBounds(52, 254, 108, 20);
+		textField_Cpf.setBounds(52, 254, 104, 20);
 		frame.getContentPane().add(textField_Cpf);
 
 		button_Criar = new JButton("Criar");
+		button_Criar.setBackground(SystemColor.control);
 		button_Criar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -173,10 +173,11 @@ public class TelaConta{
 			}
 		});
 		button_Criar.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		button_Criar.setBounds(170, 254, 107, 20);
+		button_Criar.setBounds(166, 254, 117, 20);
 		frame.getContentPane().add(button_Criar);
 
 		button_Listar = new JButton("Listar");
+		button_Listar.setBackground(SystemColor.control);
 		button_Listar.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		button_Listar.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
@@ -211,26 +212,25 @@ public class TelaConta{
 		button_Listar.setBounds(246, 8, 89, 23);
 		frame.getContentPane().add(button_Listar);
 
-		label_Limite = new JLabel("Limite (Conta Especial):");
+		label_Limite = new JLabel("Limite (Conta especial):");
 		label_Limite.setHorizontalAlignment(SwingConstants.LEFT);
-		label_Limite.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		label_Limite.setFont(new Font("Tahoma", Font.BOLD, 12));
 		label_Limite.setBounds(21, 284, 149, 14);
 		frame.getContentPane().add(label_Limite);
 
 		textField_Limite = new JTextField();
 		textField_Limite.setFont(new Font("Dialog", Font.PLAIN, 12));
 		textField_Limite.setColumns(10);
-		textField_Limite.setBounds(161, 283, 116, 20);
+		textField_Limite.setBounds(167, 283, 116, 20);
 		frame.getContentPane().add(textField_Limite);
 
 		button_Apagar = new JButton("Apagar"); //APAGAR CONTA
+		button_Apagar.setBackground(SystemColor.control);
 		button_Apagar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try{
 					label.setText(null);
 					if (table.getSelectedRow() >= 0){
-						//String cpf = (String) table.getValueAt( table.getSelectedRow(), 1);
-						//int id = (int) table.getValueAt(table.getSelectedRow(), 1);
 						int id = (int) table.getValueAt(table.getSelectedRow(), 0);
 
 						Fachada.apagarConta(id);
@@ -250,6 +250,7 @@ public class TelaConta{
 		frame.getContentPane().add(button_Apagar);
 
 		button_AddCotitular = new JButton("Adicionar Cotitular"); //ADICIONAR COTIULAR A CONTA
+		button_AddCotitular.setBackground(SystemColor.control);
 		button_AddCotitular.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try{
@@ -287,6 +288,7 @@ public class TelaConta{
 		frame.getContentPane().add(button_AddCotitular);
 
 		button_RmvCotitular = new JButton("Remover Cotitular"); //APAGAR COTITULAR DE CONTA
+		button_RmvCotitular.setBackground(SystemColor.control);
 		button_RmvCotitular.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try{
@@ -299,7 +301,6 @@ public class TelaConta{
 						int escolha = JOptionPane.showOptionDialog(null, "Confirma remocao do cotitular "+cpf, "Alerta",
 								JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[1]);
 						if(escolha == 0) {
-							//Fachada.removerParticipanteEvento(nome, Integer.parseInt(id));
 							Fachada.removerCorrentistaConta(id, cpf);
 							label.setText("vc removeu "+cpf+ "da conta "+id);
 							listagem(Fachada.listarContas());
@@ -326,11 +327,6 @@ public class TelaConta{
 
 	public void listagem(List<Conta> lista) {
 		try{
-			//List<Conta> lista = Fachada.listarContas(textField_PesquisarNome.getText());
-			//List<Conta> lista = Fachada.listarContas();
-			
-		
-
 			DefaultTableModel model = new DefaultTableModel();
 
 			//colunas
@@ -341,24 +337,20 @@ public class TelaConta{
 			model.addColumn("Titular");
 			model.addColumn("Cotitulares");
 
-			
 			String texto;
+			ArrayList<String> correntistasAssociados = new ArrayList<>();
 			for(Conta c : lista) {
 				String titular = c.getCorrentistas().getFirst().getNome();
 				
-				texto=" ";
-				for(Correntista cr : c.getCorrentistas().subList(1, c.getCorrentistas().size())) 
-					texto += cr.getNome()+ " " ;
-		
-				
+				for(Correntista cr : c.getCorrentistas().subList(1, c.getCorrentistas().size())) { 
+					correntistasAssociados.add(cr.getNome());
+				}
+				texto = String.join(", ", correntistasAssociados);
 				//linhas
 				if(c instanceof ContaEspecial ce)
-					//model.addRow(new Object[]{p.getEmail(), p.getNome(), p.getIdade(), ce.getEmpresa(),p.getPercentual(), texto});
 					model.addRow(new Object[]{c.getId(),c.getData(),c.getSaldo(),ce.getLimite(),titular, texto});
 				else
-					//model.addRow(new Object[]{p.getEmail(), p.getNome(), p.getIdade(), "",p.getPercentual(), texto});
 					model.addRow(new Object[]{c.getId(),c.getData(),c.getSaldo(), "",titular,texto});
-
 			}
 
 			table.setModel(model);

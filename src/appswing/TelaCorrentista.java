@@ -27,6 +27,8 @@ import javax.swing.text.MaskFormatter;
 import modelos.Conta;
 import modelos.Correntista;
 import regras_de_negocio.Fachada;
+import java.awt.SystemColor;
+import javax.swing.UIManager;
 
 public class TelaCorrentista {
 	private JDialog frame;
@@ -44,50 +46,33 @@ public class TelaCorrentista {
 	private JButton button_VerContas;
 	private JTextField textField_CPF;
 
-	/**
-	 * Launch the application.
-	 */
-	//	public static void main(String[] args) {
-	//		EventQueue.invokeLater(new Runnable() {
-	//			public void run() {
-	//				try {
-	//					TelaEventos window = new TelaEventos();
-	//					window.frame.setVisible(true);
-	//				} catch (Exception e) {
-	//					e.printStackTrace();
-	//				}
-	//			}
-	//		});
-	//	}
 
-	/**
-	 * Create the application.
-	 */
 	public TelaCorrentista() {
 		initialize();
 		frame.setVisible(true);
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
 	private void initialize() {
 		frame = new JDialog();
+		frame.getContentPane().setBackground(SystemColor.inactiveCaption);
 		frame.setModal(true);
 		frame.getContentPane().setFont(new Font("Tahoma", Font.PLAIN, 12));
+		
 		frame.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowOpened(WindowEvent e) {
 				listagem();
 			}
 		});
-		frame.setTitle("Correntistas");
-		frame.setBounds(100, 100, 912, 351);
+		frame.setTitle("Correntista");
+		frame.setBounds(100, 100, 680, 340);
+		frame.setResizable(false);
+		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(26, 42, 844, 120);
+		scrollPane.setBounds(26, 42,600, 120);
 		frame.getContentPane().add(scrollPane);
 
 		table = new JTable();
@@ -97,7 +82,7 @@ public class TelaCorrentista {
 		table.setBackground(Color.WHITE);
 		table.setFillsViewportHeight(true);
 		table.setRowSelectionAllowed(true);
-		table.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		table.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		scrollPane.setViewportView(table);
 		table.setBorder(new LineBorder(new Color(0, 0, 0)));
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -106,6 +91,7 @@ public class TelaCorrentista {
 
 
 		button = new JButton("Criar");
+		button.setBackground(SystemColor.control);
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -135,41 +121,38 @@ public class TelaCorrentista {
 			}
 		});
 		button.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		button.setBounds(125, 254, 104, 23);
+		button.setBounds(239, 194, 63, 23);
 		frame.getContentPane().add(button);
 
 		label = new JLabel("");
 		label.setForeground(Color.BLUE);
 		label.setBackground(Color.RED);
-		label.setBounds(26, 287, 830, 14);
+		label.setBounds(10, 276, 644, 14);
 		frame.getContentPane().add(label);
 
 		label_cpf = new JLabel("CPF:");
 		label_cpf.setHorizontalAlignment(SwingConstants.LEFT);
-		label_cpf.setFont(new Font("Dialog", Font.PLAIN, 12));
-		label_cpf.setBounds(26, 233, 43, 14);
+		label_cpf.setFont(new Font("Dialog", Font.BOLD, 12));
+		label_cpf.setBounds(26, 226, 43, 14);
 		frame.getContentPane().add(label_cpf);
 
 		label_Nome = new JLabel("Nome:");
+		label_Nome.setForeground(new Color(0, 0, 0));
 		label_Nome.setHorizontalAlignment(SwingConstants.LEFT);
-		label_Nome.setFont(new Font("Dialog", Font.PLAIN, 12));
-		label_Nome.setBounds(26, 205, 50, 14);
+		label_Nome.setFont(new Font("Dialog", Font.BOLD, 12));
+		label_Nome.setBounds(26, 198, 50, 14);
 		frame.getContentPane().add(label_Nome);
 
-//		try {
-//			 textField_CPF = new JFormattedTextField(new MaskFormatter("###.###.###-##"));
-//		} 
-//		catch (ParseException e1) {}
 		textField_CPF = new JTextField();
 		textField_CPF.setFont(new Font("Dialog", Font.PLAIN, 12));
 		textField_CPF.setColumns(10);
-		textField_CPF.setBounds(72, 230, 104, 20);
+		textField_CPF.setBounds(72, 223, 104, 20);
 		frame.getContentPane().add(textField_CPF);
 		
 		textField_Nome = new JTextField();
 		textField_Nome.setFont(new Font("Dialog", Font.PLAIN, 12));
 		textField_Nome.setColumns(10);
-		textField_Nome.setBounds(72, 202, 157, 20);
+		textField_Nome.setBounds(72, 195, 157, 20);
 		frame.getContentPane().add(textField_Nome);
 
 		label_8 = new JLabel("selecione");
@@ -179,8 +162,8 @@ public class TelaCorrentista {
 		
 		label_Senha = new JLabel("Senha:");
 		label_Senha.setHorizontalAlignment(SwingConstants.LEFT);
-		label_Senha.setFont(new Font("Dialog", Font.PLAIN, 12));
-		label_Senha.setBounds(26, 258, 43, 14);
+		label_Senha.setFont(new Font("Dialog", Font.BOLD, 12));
+		label_Senha.setBounds(186, 226, 43, 14);
 		frame.getContentPane().add(label_Senha);
 
 		try {
@@ -188,35 +171,37 @@ public class TelaCorrentista {
 		} 
 		catch (ParseException e1) {}
 		
-		//textField_Senha = new JFormattedTextField();
+		
 		textField_Senha.setFont(new Font("Dialog", Font.PLAIN, 12));
 		textField_Senha.setColumns(10);
-		textField_Senha.setBounds(72, 255, 43, 20);
+		textField_Senha.setBounds(239, 223, 63, 20);
 		frame.getContentPane().add(textField_Senha);
 
 		button_Listar = new JButton("Listar");
+		button_Listar.setBackground(SystemColor.control);
 		button_Listar.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		button_Listar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				listagem();
 			}
 		});
-		button_Listar.setBounds(410, 8, 95, 23);
+		button_Listar.setBounds(274, 8, 95, 23);
 		frame.getContentPane().add(button_Listar);
 
 		button_VerContas = new JButton("Ver Contas");
+		button_VerContas.setBackground(SystemColor.control);
 		button_VerContas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					if (table.getSelectedRow() >= 0){
 						String cpf = (String) table.getValueAt(table.getSelectedRow(), 0);
-						String id= "Id's das contas:";
+						String id= "Id's das contas relacionadas:";
 						
 						
 						for(Conta c : Fachada.listarContas()) {
 							for (Correntista cr : c.getCorrentistas()) {
 								if (cr.getCpf().equals(cpf)) {
-									id+="\n"+c.getId()+" "+c.getCorrentistas().getFirst().getNome()+"(titular)";
+									id+="\n"+c.getId()+" - "+c.getCorrentistas().getFirst().getNome();
 								}
 							}
 							
@@ -232,7 +217,7 @@ public class TelaCorrentista {
 			}
 		});
 		button_VerContas.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		button_VerContas.setBounds(721, 201, 135, 23);
+		button_VerContas.setBounds(491, 184, 135, 23);
 		frame.getContentPane().add(button_VerContas);
 		
 

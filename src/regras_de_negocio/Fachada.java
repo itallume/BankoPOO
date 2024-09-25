@@ -125,7 +125,7 @@ public class Fachada {
             throw new Exception("Só é possível creditar um valor se você for um correntista da conta");
         }
         if (!correntista.getSenha().equals(senha)){
-            throw new Exception("Senha incorreta");
+            throw new Exception("Senha incorreta!");
         }
 
         conta.creditar(valor);
@@ -156,7 +156,7 @@ public class Fachada {
         	throw new Exception("Só é possível transferir um valor se você for um correntista da conta de origem");
         }
         if (!correntista.getSenha().equals(senha)){
-            throw new Exception("Senha incorreta");
+            throw new Exception("Senha incorreta!");
         }
 
         c1.debitar(valor);
@@ -164,7 +164,7 @@ public class Fachada {
         repositorio.salvarObjetos();
     }
 
-    public static Conta procurarConta(int id) throws Exception {
+    private static Conta procurarConta(int id) throws Exception {
         Conta conta = repositorio.localizar(id);
         if (conta == null){
             throw new Exception("Conta não encontrada, verifique o id: "+ id);
@@ -172,7 +172,7 @@ public class Fachada {
         return conta;
     }
 
-    public static Correntista procurarCorrentista(String cpf) throws Exception {
+    private static Correntista procurarCorrentista(String cpf) throws Exception {
         Correntista correntista = repositorio.localizar(cpf);
         if (correntista == null){
             throw new Exception("Correntista não encontrado, verifique o cpf: "+cpf);
