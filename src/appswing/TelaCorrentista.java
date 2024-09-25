@@ -28,7 +28,6 @@ import modelos.Conta;
 import modelos.Correntista;
 import regras_de_negocio.Fachada;
 import java.awt.SystemColor;
-import javax.swing.UIManager;
 
 public class TelaCorrentista {
 	private JDialog frame;
