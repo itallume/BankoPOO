@@ -140,7 +140,7 @@ public class Repositorio {
 		}
 
 		try	{
-			String cpf, nome, senha, ids;
+			String cpf, nome, senha, ids, idContaTitular;
 			File f = new File( new File(".\\correntistas.csv").getCanonicalPath() )  ;
 			Scanner arquivo2 = new Scanner(f);
 			while(arquivo2.hasNextLine()) 	{
@@ -149,14 +149,19 @@ public class Repositorio {
 				cpf = partes[0];
 				nome = partes[1];
 				senha = partes[2];
-
+				idContaTitular = partes[3];
 				correntista = new Correntista(cpf, nome, senha);
 				adicionar(correntista);
 
-				if (partes.length > 3) {
-					ids = partes[3];
+				if (partes.length > 4) {
+					ids = partes[4];
 					for (String id : ids.split(",")){
 						Conta c = this.localizar(Integer.parseInt(id));
+						if (id.equals(idContaTitular)){
+							c.adicionarTitular(correntista);
+							correntista.adicionar(c);
+							continue;
+						}
 						c.adicionar(correntista);
 						correntista.adicionar(c);
 					}
@@ -194,11 +199,15 @@ public class Repositorio {
 			String listaId;
 			for(Correntista correntista : correntistas) {
 				lista = new ArrayList<>();
+				String idContaTitular = null;
 				for (Conta c : correntista.getContas()) {
+					if (c.getTitular().getCpf().equals(correntista.getCpf())){
+						idContaTitular = Integer.toString(c.getId());
+					}
 					lista.add(c.getId() + "");
 				}
 				listaId = String.join(",", lista);
-				arquivo2.write(correntista.getCpf() + ";" + correntista.getNome() + ";" + correntista.getSenha() + ";" + listaId + "\n");
+				arquivo2.write(correntista.getCpf() + ";" + correntista.getNome() + ";" + correntista.getSenha() + ";" + idContaTitular + ";" +listaId + "\n");
 			}
 			arquivo2.close();
 		}

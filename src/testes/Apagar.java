@@ -8,12 +8,13 @@ package testes;
 
 import regras_de_negocio.Fachada;
 import modelos.*;
+import repositorio.Repositorio;
 
 public class Apagar {
 
 	public Apagar() {
 		try {
-			Fachada.apagarConta(2);
+			Fachada.apagarConta(3);
 			System.out.println("apagou conta");
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -1,5 +1,6 @@
 package modelos;
 
+import java.lang.reflect.Executable;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -8,6 +9,7 @@ public class Conta {
     protected String data ;
     protected double saldo;
     private LinkedList<Correntista> correntistas = new LinkedList<>();
+    private Correntista titular;
 
     public Conta(int id, String data, double saldo) {
         this.id = id;
@@ -40,6 +42,18 @@ public class Conta {
     public void transferir (double valor, Conta destino) throws Exception {
         debitar(valor);
         destino.creditar(valor);
+    }
+
+    public void adicionarTitular(Correntista c) throws Exception {
+        if (titular != null){
+            throw new Exception("Conta já possui um titular!");
+        }
+        titular = c;
+        correntistas.addFirst(c);
+    }
+
+    public Correntista getTitular(){
+        return titular;
     }
 
     public int getId() {

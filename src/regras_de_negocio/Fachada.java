@@ -33,9 +33,8 @@ public class Fachada {
     }
 
     public static void criarConta(String cpf) throws Exception {
-
         for( Conta cr : repositorio.getContas()){
-            if (cr.getCorrentistas().getFirst().getCpf().equals(cpf)){
+            if (cr.getTitular().getCpf().equals(cpf)){
                 throw new Exception("Correntista só pode ser titular de apenas uma conta");
             }
         }
@@ -43,7 +42,7 @@ public class Fachada {
         Correntista correntista = procurarCorrentista(cpf);
 
         Conta conta = new Conta(repositorio.gerarIdConta(), repositorio.gerarData());
-        conta.adicionar(correntista);
+        conta.adicionarTitular(correntista);
         correntista.adicionar(conta);
         repositorio.adicionar(conta);
         repositorio.salvarObjetos();
@@ -55,7 +54,7 @@ public class Fachada {
         }
 
         for( Conta cr : repositorio.getContas()){
-            if (cr.getCorrentistas().getFirst().getCpf().equals(cpf)){
+            if (cr.getTitular().getCpf().equals(cpf)){
                 throw new Exception("Correntista só pode ser titular de apenas uma conta");
             }
         }
@@ -63,7 +62,7 @@ public class Fachada {
         Correntista correntista = procurarCorrentista(cpf);
 
         ContaEspecial contaE = new ContaEspecial(repositorio.gerarIdConta(), repositorio.gerarData(), 0, limite);
-        contaE.adicionar(correntista);
+        contaE.adicionarTitular(correntista);
         correntista.adicionar(contaE);
         repositorio.adicionar(contaE);
         repositorio.salvarObjetos();
@@ -90,7 +89,7 @@ public class Fachada {
             throw new Exception("Correntista não faz parte desta conta!");
         }
 
-        if (conta.getCorrentistas().getFirst().getCpf().equals(cpf)){
+        if (conta.getTitular().getCpf().equals(cpf)){
             throw new Exception("Correntista titular não pode ser removido");
         }
 
